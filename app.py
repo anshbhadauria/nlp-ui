@@ -10,9 +10,27 @@ project_uris={
     "SparkNLP":"https://nlp.johnsnowlabs.com/"
 }
 
+selected_db=st.sidebar.selectbox("Database", [
+    "db 1", "db 2"
+    ])
+
+selected_table=st.sidebar.selectbox("Table", [
+    "table 1", "table 2"
+    ])
+
 selected_engine=st.sidebar.selectbox("NLP Engines", [
     "Spacy", "Apache OpenNLP", "NLTK", "AllenNLP","flairNLP","gensim", "SparkNLP"
     ])
 
-st.write(selected_engine)
-st.write(project_uris[selected_engine])
+if selected_engine=="Spacy":
+    import spacy_streamlit
+
+    models = ["en_core_web_sm", "en_core_web_md"]
+    default_text = "Sundar Pichai is the CEO of Google."
+    spacy_streamlit.visualize(models, default_text)
+
+select_preprocess=st.sidebar.multiselect("Preprocesses",options=["Lemmatization","Tokenization"])
+
+select_tasks=st.sidebar.multiselect("Tasks",options=["NER", "Sentiment analysis"])
+
+st.write(selected_db+" > "+selected_table)
